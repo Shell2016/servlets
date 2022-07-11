@@ -20,6 +20,7 @@ public final class ConnectionManager {
     private static List<Connection> sourceConnections;
 
     static {
+        loadDriver();
         initConnectionPool();
     }
 
