@@ -24,7 +24,7 @@ public class FlightServlet extends HttpServlet {
             flightService.findAll().forEach(flightDto ->
                     writer.write("""
                             <li>
-                                <a href="/tickets?FlightId=%d">%s</a>
+                                <a href="/tickets?flightId=%d">%s</a>
                             </li>
                             """.formatted(flightDto.getId(), flightDto.getDescription())));
             writer.write("</ul>");
