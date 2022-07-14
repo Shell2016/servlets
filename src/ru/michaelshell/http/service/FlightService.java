@@ -23,13 +23,13 @@ public class FlightService {
 
     public List<FlightDto> findAll() {
         return flightDao.findAll().stream()
-                .map(flight -> new FlightDto(
-                        flight.getId(),
-                        "From: %s To: %s Status: %s\n".formatted(
-                                flight.getDepartureAirportCode(),
-                                flight.getArrivalAirportCode(),
-                                flight.getStatus())
-                ))
+                .map(flight -> FlightDto.builder().id(flight.getId()).description(
+                                "From: %s To: %s Status: %s\n".formatted(
+                                        flight.getDepartureAirportCode(),
+                                        flight.getArrivalAirportCode(),
+                                        flight.getStatus()))
+                        .build()
+                )
                 .collect(toList());
     }
 
