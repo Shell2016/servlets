@@ -6,25 +6,28 @@
     <title>Registration</title>
 </head>
 <body>
-<form action="/registration" method="post">
+<form action="${pageContext.request.contextPath}/registration" method="post" enctype="multipart/form-data">
     <label>Name:
-        <input type="text" name="name">
+        <input type="text" name="name" required>
     </label><br>
     <label>Birthday:
-        <input type="date" name="birthday">
+        <input type="date" name="birthday" required>
     </label><br>
     <label>Email:
-        <input type="email" name="email">
+        <input type="email" name="email" required>
+    </label><br>
+    <label for="imageId">Image:
+        <input type="file" name="image" id="imageId">
     </label><br>
     <label>Password:
-        <input type="password" name="password">
+        <input type="password" name="password" required>
     </label><br>
     <select name="role" id="role">
         <option value="USER">user</option>
         <option value="ADMIN">admin</option>
     </select><br>
     <label>
-        <input type="radio" name="gender" value="MALE"> Male
+        <input type="radio" name="gender" value="MALE" checked> Male
     </label>
     <br>
     <label>

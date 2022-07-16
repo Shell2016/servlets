@@ -1,6 +1,7 @@
 package ru.michaelshell.http.servlet;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import ru.michaelshell.http.util.JspHelper;
 
 import java.io.IOException;
 
+@MultipartConfig(fileSizeThreshold = 1024 * 1024)
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
 
@@ -25,11 +27,11 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        var userName = req.getAttribute("name");
         var userDto = CreateUserDto.builder()
                 .name(req.getParameter("name"))
                 .birthday(req.getParameter("birthday"))
                 .email(req.getParameter("email"))
+                .image(req.getPart("image"))
                 .password(req.getParameter("password"))
                 .role(req.getParameter("role"))
                 .gender(req.getParameter("gender"))
