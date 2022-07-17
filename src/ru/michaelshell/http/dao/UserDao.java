@@ -2,9 +2,14 @@ package ru.michaelshell.http.dao;
 
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
+import ru.michaelshell.http.entity.Gender;
+import ru.michaelshell.http.entity.Role;
 import ru.michaelshell.http.entity.User;
 import ru.michaelshell.http.util.ConnectionManager;
 
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +27,28 @@ public class UserDao implements Dao<Integer, User> {
             (?, ?, ?, ?, ?, ?, ?)
             """;
 
+    private static final String FIND_BY_EMAIL_AND_PASSWORD_SQL = """
+            SELECT * FROM users WHERE email = ? AND password = ?
+            """;
+
     public static UserDao getInstance() {
         return INSTANCE;
+    }
+
+    @SneakyThrows
+    public Optional<User> findByEmailAndPassword(String email, String password) {
+        try (var connection = ConnectionManager.get();
+             var preparedStatement = connection.prepareStatement(FIND_BY_EMAIL_AND_PASSWORD_SQL)) {
+            preparedStatement.setObject(1, email);
+            preparedStatement.setObject(2, password);
+
+            var resultSet = preparedStatement.executeQuery();
+            User user = null;
+            if (resultSet.next()) {
+                user = getUser(resultSet);
+            }
+            return Optional.ofNullable(user);
+        }
     }
 
     @Override
@@ -67,5 +92,18 @@ public class UserDao implements Dao<Integer, User> {
     @Override
     public void update(User entity) {
 
+    }
+
+    private User getUser(ResultSet resultSet) throws SQLException {
+        return User.builder()
+                .id(resultSet.getObject("id", Integer.class))
+                .name(resultSet.getObject("name", String.class))
+                .birthday(resultSet.getObject("birthday", Date.class).toLocalDate())
+                .email(resultSet.getObject("email", String.class))
+                .password(resultSet.getObject("password", String.class))
+                .gender(Gender.valueOf(resultSet.getObject("gender", String.class)))
+                .role(Role.valueOf(resultSet.getObject("role", String.class)))
+                .image(resultSet.getObject("image", String.class))
+                .build();
     }
 }

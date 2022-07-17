@@ -14,13 +14,14 @@ import ru.michaelshell.http.util.JspHelper;
 import java.io.IOException;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024)
-@WebServlet("/registration")
+@WebServlet(value = "/registration", name = "RegistrationServlet")
 public class RegistrationServlet extends HttpServlet {
 
     public static final UserService userService = UserService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        if (true) throw new RuntimeException();
         req.getRequestDispatcher(JspHelper.getPath("registration"))
                 .forward(req, resp);
     }
