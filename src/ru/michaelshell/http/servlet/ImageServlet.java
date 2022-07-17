@@ -7,11 +7,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import ru.michaelshell.http.service.ImageService;
+import ru.michaelshell.http.util.UrlPath;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-@WebServlet("/images/*")
+@WebServlet(UrlPath.IMAGES + "/*")
 public class ImageServlet extends HttpServlet {
 
     private final ImageService imageService = ImageService.getINSTANCE();

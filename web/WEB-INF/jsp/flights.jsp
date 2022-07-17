@@ -7,6 +7,7 @@
     <title>Flights</title>
 </head>
 <body>
+    <%@ include file="header.jsp"%>
     <c:if test="${not empty requestScope.flights}">
         <h1>Список перелетов:</h1>
         <ul>
@@ -15,7 +16,6 @@
                     <a href="${pageContext.request.contextPath}/tickets?flightId=${flight.id}">${flight.description}</a>
                 </li>
             </c:forEach>
-
         </ul>
     </c:if>
 </body>

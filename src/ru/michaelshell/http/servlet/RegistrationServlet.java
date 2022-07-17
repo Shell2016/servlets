@@ -10,11 +10,12 @@ import ru.michaelshell.http.dto.CreateUserDto;
 import ru.michaelshell.http.exception.ValidationException;
 import ru.michaelshell.http.service.UserService;
 import ru.michaelshell.http.util.JspHelper;
+import ru.michaelshell.http.util.UrlPath;
 
 import java.io.IOException;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024)
-@WebServlet(value = "/registration", name = "RegistrationServlet")
+@WebServlet(value = UrlPath.REGISTRATION, name = "RegistrationServlet")
 public class RegistrationServlet extends HttpServlet {
 
     public static final UserService userService = UserService.getInstance();
